@@ -28,12 +28,12 @@
 */
 #ifndef CEREAL_ARCHIVES_XML_HPP_
 #define CEREAL_ARCHIVES_XML_HPP_
-#include <cereal/cereal.hpp>
-#include <cereal/details/util.hpp>
+#include "cereal/cereal.hpp"
+#include "cereal/details/util.hpp"
 
-#include <cereal/external/rapidxml/rapidxml.hpp>
-#include <cereal/external/rapidxml/rapidxml_print.hpp>
-#include <cereal/external/base64.hpp>
+#include "cereal/external/rapidxml/rapidxml.hpp"
+#include "cereal/external/rapidxml/rapidxml_print.hpp"
+#include "cereal/external/base64.hpp"
 
 #include <sstream>
 #include <stack>
@@ -158,7 +158,7 @@ namespace cereal
       }
 
       //! Destructor, flushes the XML
-      ~XMLOutputArchive()
+      ~XMLOutputArchive() CEREAL_NOEXCEPT
       {
         const int flags = itsIndent ? 0x0 : rapidxml::print_no_indenting;
         rapidxml::print( itsStream, itsXML, flags );
@@ -411,6 +411,8 @@ namespace cereal
         else
           itsNodes.emplace( root );
       }
+
+      ~XMLInputArchive() CEREAL_NOEXCEPT = default;
 
       //! Loads some binary data, encoded as a base64 string, optionally specified by some name
       /*! This will automatically start and finish a node to load the data, and can be called directly by
